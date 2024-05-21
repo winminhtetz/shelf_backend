@@ -1,13 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-// final apiKey = Platform.environment['OPENAI_API_KEY'];
-final apiKey = 'sk-proj-cRBetP0lCy7EpzQuKaf9T3BlbkFJuJ0KJXijxVzAdJSTGG0a';
-final link =
-    'https://raw.githubusercontent.com/winminhtetz/JsonFiles/main/pyin_nay_b_lar.json';
+final apiKey = Platform.environment['API_KEY'];
 
 final router = Router()
   ..get('/random_activity/all', _getAllActivities)
@@ -16,7 +14,7 @@ final router = Router()
 Future<Response> _filterActivities(Request request) async {
   final query = request.params["category"]!;
   final decodeQuery = Uri.decodeComponent(query);
-  final url = Uri.parse(link);
+  final url = Uri.parse(apiKey ?? '');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final decoded = jsonDecode(response.body) as List;
@@ -35,7 +33,7 @@ Future<Response> _filterActivities(Request request) async {
 }
 
 Future<Response> _getAllActivities(Request request) async {
-  final url = Uri.parse(link);
+  final url = Uri.parse(apiKey ?? "");
   final response = await http.get(url);
   if (response.statusCode == 200) {
     // final responseBody = jsonDecode(response.body);
