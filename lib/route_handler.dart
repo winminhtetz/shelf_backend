@@ -49,7 +49,7 @@ Future<Response> _getAllActivities(Request request) async {
 }
 
 Future<Response> _tipHandler(Request request) async {
-  final url = Uri.parse('https://api.openai.com/v1/chat/completions');
+  final url = Uri.parse('fdsfdfsdfdfdf');
   final headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer $key',
