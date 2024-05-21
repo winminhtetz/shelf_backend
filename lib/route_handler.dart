@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-final apiKey = Platform.environment['API_KEY'];
+final key = Platform.environment['KEY'];
 
 final router = Router()
   ..get('/random_activity/all', _getAllActivities)
@@ -14,7 +14,7 @@ final router = Router()
 Future<Response> _filterActivities(Request request) async {
   final query = request.params["category"]!;
   final decodeQuery = Uri.decodeComponent(query);
-  final url = Uri.parse(apiKey ?? '');
+  final url = Uri.parse(key ?? '');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     final decoded = jsonDecode(response.body) as List;
@@ -33,7 +33,7 @@ Future<Response> _filterActivities(Request request) async {
 }
 
 Future<Response> _getAllActivities(Request request) async {
-  final url = Uri.parse(apiKey ?? "");
+  final url = Uri.parse(key ?? "");
   final response = await http.get(url);
   if (response.statusCode == 200) {
     // final responseBody = jsonDecode(response.body);
@@ -52,7 +52,7 @@ Future<Response> _tipHandler(Request request) async {
   final url = Uri.parse('https://api.openai.com/v1/chat/completions');
   final headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer $apiKey',
+    'Authorization': 'Bearer $key',
   };
   final data = {
     'model': 'gpt-3.5-turbo',
